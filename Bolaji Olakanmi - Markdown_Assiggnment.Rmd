@@ -1,0 +1,43 @@
+---
+title: "ANA 515 Assignment 1"
+author: "Bolaji Olakanmi"
+date: "11/5/2021"
+output:
+  pdf_document: default
+  html_document:
+    theme:
+      bootswatch: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 1 
+
+```{r, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+```{r, echo=FALSE}
+url = 'https://raw.githubusercontent.com/fivethirtyeight/guns-data/master/full_data.csv'
+dataset = read.csv(url)
+print(head(dataset, 5))
+```
+```{r}
+gun_death = dataset 
+youth = gun_death[gun_death$age <= 65,]
+summary(youth)
+```
+```{r youth-dist, echo=FALSE}
+youth%>%
+ggplot(aes(age)) + geom_freqpoly(binwidth=1)
+```
+# Gun deaths by race 
+
+```{r race-dist, echo=FALSE}
+youth %>%
+ggplot(aes(fct_infreq(race) %>% fct_rev())) + geom_bar() + coord_flip() + labs(x="Victim race")
+
+```
+
